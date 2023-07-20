@@ -8,6 +8,11 @@ const Product = ({ title, basePrice, colors, sizes, name }) => {
 	const [currentColor, setCurrentColor] = useState(colors[0])
 	const [currentSize, setCurrentSize] = useState(sizes[0].name)
 
+
+	const getPrice = () => {
+		const additionalPrice = sizes.filter(el => el.name === currentSize)[0].additionalPrice
+		return basePrice + additionalPrice
+	}
 	return (
 		<article className={styles.product}>
 			<div className={styles.imageContainer}>
@@ -20,7 +25,7 @@ const Product = ({ title, basePrice, colors, sizes, name }) => {
 			<div>
 				<header>
 					<h2 className={styles.name}>{title}</h2>
-					<span className={styles.price}>Price: {basePrice}$</span>
+					<span className={styles.price}>Price: {getPrice()} $</span>
 				</header>
 				<form>
 					<div className={styles.sizes}>
