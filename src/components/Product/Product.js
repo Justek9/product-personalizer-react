@@ -7,7 +7,6 @@ import PropTypes from 'prop-types'
 const Product = ({ title, basePrice, colors, sizes, name }) => {
 	const [currentColor, setCurrentColor] = useState(colors[0])
 	const [currentSize, setCurrentSize] = useState(sizes[0].name)
-  console.log(currentSize);
 
 	return (
 		<article className={styles.product}>
@@ -30,7 +29,10 @@ const Product = ({ title, basePrice, colors, sizes, name }) => {
 							{sizes.map((size, i) => {
 								return (
 									<li key={i}>
-										<button type='button' className={clsx(currentSize === size.name && styles.active)}>
+										<button
+											type='button'
+											className={clsx(currentSize === size.name && styles.active)}
+											onClick={() => setCurrentSize(size.name)}>
 											{size.name}
 										</button>
 									</li>
@@ -47,6 +49,7 @@ const Product = ({ title, basePrice, colors, sizes, name }) => {
 								return (
 									<li key={i}>
 										<button
+											onClick={() => setCurrentColor(color)}
 											type='button'
 											className={clsx(styles[colorClassName], currentColor === color && styles.active)}></button>
 									</li>
