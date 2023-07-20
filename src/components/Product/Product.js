@@ -8,11 +8,20 @@ const Product = ({ title, basePrice, colors, sizes, name }) => {
 	const [currentColor, setCurrentColor] = useState(colors[0])
 	const [currentSize, setCurrentSize] = useState(sizes[0].name)
 
-
+	let finalPrice
 	const getPrice = () => {
 		const additionalPrice = sizes.filter(el => el.name === currentSize)[0].additionalPrice
-		return basePrice + additionalPrice
+		finalPrice = basePrice + additionalPrice
+		return finalPrice
 	}
+
+	const addToCartClickHandle = e => {
+		e.preventDefault()
+		console.log(
+			`Summary\n==============\nName: ${title}\nPrice: ${finalPrice}\nSize: ${currentSize}\nColor: ${currentColor}`
+		)
+	}
+
 	return (
 		<article className={styles.product}>
 			<div className={styles.imageContainer}>
@@ -62,7 +71,7 @@ const Product = ({ title, basePrice, colors, sizes, name }) => {
 							})}
 						</ul>
 					</div>
-					<Button className={styles.button}>
+					<Button className={styles.button} onClick={addToCartClickHandle}>
 						<span className='fa fa-shopping-cart' />
 					</Button>
 				</form>
