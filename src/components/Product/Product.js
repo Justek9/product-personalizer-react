@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import ProductForm from '../ProductForm/ProductForm'
 import PropTypes from 'prop-types'
 import ProductImage from '../ProductImage/ProductImage'
@@ -8,12 +8,10 @@ const Product = ({ title, basePrice, colors, sizes, name }) => {
 	const [currentColor, setCurrentColor] = useState(colors[0])
 	const [currentSize, setCurrentSize] = useState(sizes[0].name)
 
-	let finalPrice
-	const getPrice = () => {
+	const getPrice = useMemo(() => {
 		const additionalPrice = sizes.filter(el => el.name === currentSize)[0].additionalPrice
-		finalPrice = basePrice + additionalPrice
-		return finalPrice
-	}
+		return basePrice + additionalPrice
+	}, [currentSize, basePrice, sizes])
 
 	return (
 		<article className={styles.product}>
@@ -21,10 +19,10 @@ const Product = ({ title, basePrice, colors, sizes, name }) => {
 			<div>
 				<header>
 					<h2 className={styles.name}>{title}</h2>
-					<span className={styles.price}>Price: {getPrice()} $</span>
+					<span className={styles.price}>Price: {getPrice} $</span>
 				</header>
 				<ProductForm
-					finalPrice={finalPrice}
+					finalPrice={getPrice}
 					currentSize={currentSize}
 					currentColor={currentColor}
 					setCurrentColor={setCurrentColor}
